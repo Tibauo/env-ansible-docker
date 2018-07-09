@@ -1,0 +1,718 @@
+Script is executed from a terminal
+Sending build context to Docker daemon   2.56kB
+Step 1/7 : FROM centos:7
+ ---> 49f7960eb7e4
+Step 2/7 : ENV container docker
+ ---> Using cache
+ ---> d638cb00fc62
+Step 3/7 : ENV http_proxy=
+ ---> Running in 4dee3381dcc7
+Removing intermediate container 4dee3381dcc7
+ ---> de7436d01294
+Step 4/7 : ENV https_proxy=
+ ---> Running in 8831c4a721a2
+Removing intermediate container 8831c4a721a2
+ ---> b6330c1e7025
+Step 5/7 : RUN yum -y swap -- remove systemd-container systemd-container-libs -- install systemd systemd-libs
+ ---> Running in 1c16a6e676be
+Loaded plugins: fastestmirror, ovl
+[91mNo Match for argument: systemd-container
+[0m[91mNo Match for argument: systemd-container-libs
+[0mswap remove systemd-container systemd-container-libs
+Removing intermediate container 1c16a6e676be
+ ---> a2d7f5d02ca9
+Step 6/7 : RUN yum -y update; yum clean all  && (cd /lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == systemd-tmpfiles-setup.service ] || rm -f $i; done)  && rm -f /lib/systemd/system/multi-user.target.wants/*  && rm -f /etc/systemd/system/*.wants/*  && rm -f /lib/systemd/system/local-fs.target.wants/*  && rm -f /lib/systemd/system/sockets.target.wants/*udev*  && rm -f /lib/systemd/system/sockets.target.wants/*initctl*  && rm -f /lib/systemd/system/basic.target.wants/*  && rm -f /lib/systemd/system/anaconda.target.wants/*
+ ---> Running in 74e50fd45923
+Loaded plugins: fastestmirror, ovl
+Determining fastest mirrors
+ * base: centos.mirrors.ovh.net
+ * extras: mirrors.standaloneinstaller.com
+ * updates: mirror.plusserver.com
+No packages marked for update
+Loaded plugins: fastestmirror, ovl
+Cleaning repos: base extras updates
+Cleaning up everything
+Maybe you want: rm -rf /var/cache/yum, to also free up space taken by orphaned data from disabled or removed repos
+Cleaning up list of fastest mirrors
+Removing intermediate container 74e50fd45923
+ ---> c0ce6d4b7237
+Step 7/7 : VOLUME [ "/sys/fs/cgroup" ]
+ ---> Running in 6eb944810440
+Removing intermediate container 6eb944810440
+ ---> 4f8d188fa234
+Successfully built 4f8d188fa234
+Successfully tagged centos-systemd:latest
+VOTRE IMAGE DOCKER : centos-systemd est cree
+Pour l'utiliser : docker run --name <NOM> -d --privileged -ti -e container=docker centos-systemd /usr/sbin/init
+Sending build context to Docker daemon   2.56kB
+Step 1/11 : FROM centos-systemd
+ ---> 4f8d188fa234
+Step 2/11 : ENV http_proxy=
+ ---> Running in 612405543c31
+Removing intermediate container 612405543c31
+ ---> af2bf691a2fe
+Step 3/11 : ENV https_proxy=
+ ---> Running in 100ff2669b12
+Removing intermediate container 100ff2669b12
+ ---> 184cda68450f
+Step 4/11 : RUN yum -y install openssh-server openssh-clients epel-release sudo &&     rm -f /etc/ssh/ssh_host_ecdsa_key /etc/ssh/ssh_host_ed25519_key /etc/ssh/ssh_host_dsa_key &&     ssh-keygen -q -N "" -t rsa -f /etc/ssh/ssh_host_rsa_key
+ ---> Running in fd506a227f6e
+Loaded plugins: fastestmirror, ovl
+Determining fastest mirrors
+ * base: mir01.syntis.net
+ * extras: mirrors.standaloneinstaller.com
+ * updates: mir01.syntis.net
+Resolving Dependencies
+--> Running transaction check
+---> Package epel-release.noarch 0:7-11 will be installed
+---> Package openssh-clients.x86_64 0:7.4p1-16.el7 will be installed
+--> Processing Dependency: openssh = 7.4p1-16.el7 for package: openssh-clients-7.4p1-16.el7.x86_64
+--> Processing Dependency: fipscheck-lib(x86-64) >= 1.3.0 for package: openssh-clients-7.4p1-16.el7.x86_64
+--> Processing Dependency: libfipscheck.so.1()(64bit) for package: openssh-clients-7.4p1-16.el7.x86_64
+--> Processing Dependency: libedit.so.0()(64bit) for package: openssh-clients-7.4p1-16.el7.x86_64
+---> Package openssh-server.x86_64 0:7.4p1-16.el7 will be installed
+--> Processing Dependency: libwrap.so.0()(64bit) for package: openssh-server-7.4p1-16.el7.x86_64
+---> Package sudo.x86_64 0:1.8.19p2-13.el7 will be installed
+--> Running transaction check
+---> Package fipscheck-lib.x86_64 0:1.4.1-6.el7 will be installed
+--> Processing Dependency: /usr/bin/fipscheck for package: fipscheck-lib-1.4.1-6.el7.x86_64
+---> Package libedit.x86_64 0:3.0-12.20121213cvs.el7 will be installed
+---> Package openssh.x86_64 0:7.4p1-16.el7 will be installed
+---> Package tcp_wrappers-libs.x86_64 0:7.6-77.el7 will be installed
+--> Running transaction check
+---> Package fipscheck.x86_64 0:1.4.1-6.el7 will be installed
+--> Finished Dependency Resolution
+
+Dependencies Resolved
+
+================================================================================
+ Package               Arch       Version                      Repository  Size
+================================================================================
+Installing:
+ epel-release          noarch     7-11                         extras      15 k
+ openssh-clients       x86_64     7.4p1-16.el7                 base       655 k
+ openssh-server        x86_64     7.4p1-16.el7                 base       458 k
+ sudo                  x86_64     1.8.19p2-13.el7              base       1.1 M
+Installing for dependencies:
+ fipscheck             x86_64     1.4.1-6.el7                  base        21 k
+ fipscheck-lib         x86_64     1.4.1-6.el7                  base        11 k
+ libedit               x86_64     3.0-12.20121213cvs.el7       base        92 k
+ openssh               x86_64     7.4p1-16.el7                 base       510 k
+ tcp_wrappers-libs     x86_64     7.6-77.el7                   base        66 k
+
+Transaction Summary
+================================================================================
+Install  4 Packages (+5 Dependent packages)
+
+Total download size: 2.9 M
+Installed size: 9.7 M
+Downloading packages:
+[91mwarning: /var/cache/yum/x86_64/7/base/packages/fipscheck-lib-1.4.1-6.el7.x86_64.rpm: Header V3 RSA/SHA256 Signature, key ID f4a80eb5: NOKEY
+[0mPublic key for fipscheck-lib-1.4.1-6.el7.x86_64.rpm is not installed
+Public key for epel-release-7-11.noarch.rpm is not installed
+--------------------------------------------------------------------------------
+Total                                              793 kB/s | 2.9 MB  00:03     
+Retrieving key from file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+[91mImporting GPG key 0xF4A80EB5:
+ Userid     : "CentOS-7 Key (CentOS 7 Official Signing Key) <security@centos.org>"
+ Fingerprint: 6341 ab27 53d7 8a78 a7c2 7bb1 24c6 a8a7 f4a8 0eb5
+ Package    : centos-release-7-5.1804.el7.centos.2.x86_64 (@Updates)
+ From       : /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+[0mRunning transaction check
+Running transaction test
+Transaction test succeeded
+Running transaction
+  Installing : fipscheck-1.4.1-6.el7.x86_64                                 1/9 
+  Installing : fipscheck-lib-1.4.1-6.el7.x86_64                             2/9 
+  Installing : openssh-7.4p1-16.el7.x86_64                                  3/9 
+  Installing : libedit-3.0-12.20121213cvs.el7.x86_64                        4/9 
+  Installing : tcp_wrappers-libs-7.6-77.el7.x86_64                          5/9 
+  Installing : openssh-server-7.4p1-16.el7.x86_64                           6/9 
+  Installing : openssh-clients-7.4p1-16.el7.x86_64                          7/9 
+  Installing : sudo-1.8.19p2-13.el7.x86_64                                  8/9 
+  Installing : epel-release-7-11.noarch                                     9/9 
+  Verifying  : fipscheck-lib-1.4.1-6.el7.x86_64                             1/9 
+  Verifying  : epel-release-7-11.noarch                                     2/9 
+  Verifying  : openssh-7.4p1-16.el7.x86_64                                  3/9 
+  Verifying  : tcp_wrappers-libs-7.6-77.el7.x86_64                          4/9 
+  Verifying  : fipscheck-1.4.1-6.el7.x86_64                                 5/9 
+  Verifying  : sudo-1.8.19p2-13.el7.x86_64                                  6/9 
+  Verifying  : libedit-3.0-12.20121213cvs.el7.x86_64                        7/9 
+  Verifying  : openssh-clients-7.4p1-16.el7.x86_64                          8/9 
+  Verifying  : openssh-server-7.4p1-16.el7.x86_64                           9/9 
+
+Installed:
+  epel-release.noarch 0:7-11             openssh-clients.x86_64 0:7.4p1-16.el7  
+  openssh-server.x86_64 0:7.4p1-16.el7   sudo.x86_64 0:1.8.19p2-13.el7          
+
+Dependency Installed:
+  fipscheck.x86_64 0:1.4.1-6.el7            fipscheck-lib.x86_64 0:1.4.1-6.el7  
+  libedit.x86_64 0:3.0-12.20121213cvs.el7   openssh.x86_64 0:7.4p1-16.el7       
+  tcp_wrappers-libs.x86_64 0:7.6-77.el7    
+
+Complete!
+Removing intermediate container fd506a227f6e
+ ---> dfcf22610c69
+Step 5/11 : RUN sed -i 's/required/optional/g' /etc/pam.d/sshd
+ ---> Running in ec3a12fa6829
+Removing intermediate container ec3a12fa6829
+ ---> 6d3ce141d7cd
+Step 6/11 : RUN useradd -ms /bin/bash User  && echo "User:User" | chpasswd  && echo "root:root" | chpasswd  && usermod -aG wheel User
+ ---> Running in e34e06a245e2
+Removing intermediate container e34e06a245e2
+ ---> ebd92ad24b09
+Step 7/11 : RUN yum -y update  && yum -y install openssh-server vim openssh-clients  && yum clean all
+ ---> Running in 7dc0748db16b
+Loaded plugins: fastestmirror, ovl
+Loading mirror speeds from cached hostfile
+ * base: mir01.syntis.net
+ * epel: mirror.ibcp.fr
+ * extras: mirrors.standaloneinstaller.com
+ * updates: mir01.syntis.net
+No packages marked for update
+Loaded plugins: fastestmirror, ovl
+Loading mirror speeds from cached hostfile
+ * base: mir01.syntis.net
+ * epel: mirrors.mivocloud.com
+ * extras: mirrors.standaloneinstaller.com
+ * updates: mir01.syntis.net
+Package openssh-server-7.4p1-16.el7.x86_64 already installed and latest version
+Package openssh-clients-7.4p1-16.el7.x86_64 already installed and latest version
+Resolving Dependencies
+--> Running transaction check
+---> Package vim-enhanced.x86_64 2:7.4.160-4.el7 will be installed
+--> Processing Dependency: vim-common = 2:7.4.160-4.el7 for package: 2:vim-enhanced-7.4.160-4.el7.x86_64
+--> Processing Dependency: which for package: 2:vim-enhanced-7.4.160-4.el7.x86_64
+--> Processing Dependency: perl(:MODULE_COMPAT_5.16.3) for package: 2:vim-enhanced-7.4.160-4.el7.x86_64
+--> Processing Dependency: libperl.so()(64bit) for package: 2:vim-enhanced-7.4.160-4.el7.x86_64
+--> Processing Dependency: libgpm.so.2()(64bit) for package: 2:vim-enhanced-7.4.160-4.el7.x86_64
+--> Running transaction check
+---> Package gpm-libs.x86_64 0:1.20.7-5.el7 will be installed
+---> Package perl.x86_64 4:5.16.3-292.el7 will be installed
+--> Processing Dependency: perl(Socket) >= 1.3 for package: 4:perl-5.16.3-292.el7.x86_64
+--> Processing Dependency: perl(Scalar::Util) >= 1.10 for package: 4:perl-5.16.3-292.el7.x86_64
+--> Processing Dependency: perl-macros for package: 4:perl-5.16.3-292.el7.x86_64
+--> Processing Dependency: perl(threads::shared) for package: 4:perl-5.16.3-292.el7.x86_64
+--> Processing Dependency: perl(threads) for package: 4:perl-5.16.3-292.el7.x86_64
+--> Processing Dependency: perl(constant) for package: 4:perl-5.16.3-292.el7.x86_64
+--> Processing Dependency: perl(Time::Local) for package: 4:perl-5.16.3-292.el7.x86_64
+--> Processing Dependency: perl(Time::HiRes) for package: 4:perl-5.16.3-292.el7.x86_64
+--> Processing Dependency: perl(Storable) for package: 4:perl-5.16.3-292.el7.x86_64
+--> Processing Dependency: perl(Socket) for package: 4:perl-5.16.3-292.el7.x86_64
+--> Processing Dependency: perl(Scalar::Util) for package: 4:perl-5.16.3-292.el7.x86_64
+--> Processing Dependency: perl(Pod::Simple::XHTML) for package: 4:perl-5.16.3-292.el7.x86_64
+--> Processing Dependency: perl(Pod::Simple::Search) for package: 4:perl-5.16.3-292.el7.x86_64
+--> Processing Dependency: perl(Getopt::Long) for package: 4:perl-5.16.3-292.el7.x86_64
+--> Processing Dependency: perl(Filter::Util::Call) for package: 4:perl-5.16.3-292.el7.x86_64
+--> Processing Dependency: perl(File::Temp) for package: 4:perl-5.16.3-292.el7.x86_64
+--> Processing Dependency: perl(File::Spec::Unix) for package: 4:perl-5.16.3-292.el7.x86_64
+--> Processing Dependency: perl(File::Spec::Functions) for package: 4:perl-5.16.3-292.el7.x86_64
+--> Processing Dependency: perl(File::Spec) for package: 4:perl-5.16.3-292.el7.x86_64
+--> Processing Dependency: perl(File::Path) for package: 4:perl-5.16.3-292.el7.x86_64
+--> Processing Dependency: perl(Exporter) for package: 4:perl-5.16.3-292.el7.x86_64
+--> Processing Dependency: perl(Cwd) for package: 4:perl-5.16.3-292.el7.x86_64
+--> Processing Dependency: perl(Carp) for package: 4:perl-5.16.3-292.el7.x86_64
+---> Package perl-libs.x86_64 4:5.16.3-292.el7 will be installed
+---> Package vim-common.x86_64 2:7.4.160-4.el7 will be installed
+--> Processing Dependency: vim-filesystem for package: 2:vim-common-7.4.160-4.el7.x86_64
+---> Package which.x86_64 0:2.20-7.el7 will be installed
+--> Running transaction check
+---> Package perl-Carp.noarch 0:1.26-244.el7 will be installed
+---> Package perl-Exporter.noarch 0:5.68-3.el7 will be installed
+---> Package perl-File-Path.noarch 0:2.09-2.el7 will be installed
+---> Package perl-File-Temp.noarch 0:0.23.01-3.el7 will be installed
+---> Package perl-Filter.x86_64 0:1.49-3.el7 will be installed
+---> Package perl-Getopt-Long.noarch 0:2.40-3.el7 will be installed
+--> Processing Dependency: perl(Pod::Usage) >= 1.14 for package: perl-Getopt-Long-2.40-3.el7.noarch
+--> Processing Dependency: perl(Text::ParseWords) for package: perl-Getopt-Long-2.40-3.el7.noarch
+---> Package perl-PathTools.x86_64 0:3.40-5.el7 will be installed
+---> Package perl-Pod-Simple.noarch 1:3.28-4.el7 will be installed
+--> Processing Dependency: perl(Pod::Escapes) >= 1.04 for package: 1:perl-Pod-Simple-3.28-4.el7.noarch
+--> Processing Dependency: perl(Encode) for package: 1:perl-Pod-Simple-3.28-4.el7.noarch
+---> Package perl-Scalar-List-Utils.x86_64 0:1.27-248.el7 will be installed
+---> Package perl-Socket.x86_64 0:2.010-4.el7 will be installed
+---> Package perl-Storable.x86_64 0:2.45-3.el7 will be installed
+---> Package perl-Time-HiRes.x86_64 4:1.9725-3.el7 will be installed
+---> Package perl-Time-Local.noarch 0:1.2300-2.el7 will be installed
+---> Package perl-constant.noarch 0:1.27-2.el7 will be installed
+---> Package perl-macros.x86_64 4:5.16.3-292.el7 will be installed
+---> Package perl-threads.x86_64 0:1.87-4.el7 will be installed
+---> Package perl-threads-shared.x86_64 0:1.43-6.el7 will be installed
+---> Package vim-filesystem.x86_64 2:7.4.160-4.el7 will be installed
+--> Running transaction check
+---> Package perl-Encode.x86_64 0:2.51-7.el7 will be installed
+---> Package perl-Pod-Escapes.noarch 1:1.04-292.el7 will be installed
+---> Package perl-Pod-Usage.noarch 0:1.63-3.el7 will be installed
+--> Processing Dependency: perl(Pod::Text) >= 3.15 for package: perl-Pod-Usage-1.63-3.el7.noarch
+--> Processing Dependency: perl-Pod-Perldoc for package: perl-Pod-Usage-1.63-3.el7.noarch
+---> Package perl-Text-ParseWords.noarch 0:3.29-4.el7 will be installed
+--> Running transaction check
+---> Package perl-Pod-Perldoc.noarch 0:3.20-4.el7 will be installed
+--> Processing Dependency: perl(parent) for package: perl-Pod-Perldoc-3.20-4.el7.noarch
+--> Processing Dependency: perl(HTTP::Tiny) for package: perl-Pod-Perldoc-3.20-4.el7.noarch
+--> Processing Dependency: groff-base for package: perl-Pod-Perldoc-3.20-4.el7.noarch
+---> Package perl-podlators.noarch 0:2.5.1-3.el7 will be installed
+--> Running transaction check
+---> Package groff-base.x86_64 0:1.22.2-8.el7 will be installed
+---> Package perl-HTTP-Tiny.noarch 0:0.033-3.el7 will be installed
+---> Package perl-parent.noarch 1:0.225-244.el7 will be installed
+--> Finished Dependency Resolution
+
+Dependencies Resolved
+
+================================================================================
+ Package                     Arch        Version                Repository
+                                                                           Size
+================================================================================
+Installing:
+ vim-enhanced                x86_64      2:7.4.160-4.el7        base      1.0 M
+Installing for dependencies:
+ gpm-libs                    x86_64      1.20.7-5.el7           base       32 k
+ groff-base                  x86_64      1.22.2-8.el7           base      942 k
+ perl                        x86_64      4:5.16.3-292.el7       base      8.0 M
+ perl-Carp                   noarch      1.26-244.el7           base       19 k
+ perl-Encode                 x86_64      2.51-7.el7             base      1.5 M
+ perl-Exporter               noarch      5.68-3.el7             base       28 k
+ perl-File-Path              noarch      2.09-2.el7             base       26 k
+ perl-File-Temp              noarch      0.23.01-3.el7          base       56 k
+ perl-Filter                 x86_64      1.49-3.el7             base       76 k
+ perl-Getopt-Long            noarch      2.40-3.el7             base       56 k
+ perl-HTTP-Tiny              noarch      0.033-3.el7            base       38 k
+ perl-PathTools              x86_64      3.40-5.el7             base       82 k
+ perl-Pod-Escapes            noarch      1:1.04-292.el7         base       51 k
+ perl-Pod-Perldoc            noarch      3.20-4.el7             base       87 k
+ perl-Pod-Simple             noarch      1:3.28-4.el7           base      216 k
+ perl-Pod-Usage              noarch      1.63-3.el7             base       27 k
+ perl-Scalar-List-Utils      x86_64      1.27-248.el7           base       36 k
+ perl-Socket                 x86_64      2.010-4.el7            base       49 k
+ perl-Storable               x86_64      2.45-3.el7             base       77 k
+ perl-Text-ParseWords        noarch      3.29-4.el7             base       14 k
+ perl-Time-HiRes             x86_64      4:1.9725-3.el7         base       45 k
+ perl-Time-Local             noarch      1.2300-2.el7           base       24 k
+ perl-constant               noarch      1.27-2.el7             base       19 k
+ perl-libs                   x86_64      4:5.16.3-292.el7       base      688 k
+ perl-macros                 x86_64      4:5.16.3-292.el7       base       43 k
+ perl-parent                 noarch      1:0.225-244.el7        base       12 k
+ perl-podlators              noarch      2.5.1-3.el7            base      112 k
+ perl-threads                x86_64      1.87-4.el7             base       49 k
+ perl-threads-shared         x86_64      1.43-6.el7             base       39 k
+ vim-common                  x86_64      2:7.4.160-4.el7        base      5.9 M
+ vim-filesystem              x86_64      2:7.4.160-4.el7        base       10 k
+ which                       x86_64      2.20-7.el7             base       41 k
+
+Transaction Summary
+================================================================================
+Install  1 Package (+32 Dependent packages)
+
+Total download size: 19 M
+Installed size: 63 M
+Downloading packages:
+[91mhttp://fr2.rpmfind.net/linux/centos/7.5.1804/os/x86_64/Packages/perl-HTTP-Tiny-0.033-3.el7.noarch.rpm: [Errno 14] curl#56 - "Recv failure: Connection reset by peer"
+[0m[91mTrying other mirror.
+[0m--------------------------------------------------------------------------------
+Total                                              201 kB/s |  19 MB  01:38     
+Running transaction check
+Running transaction test
+Transaction test succeeded
+Running transaction
+  Installing : 2:vim-filesystem-7.4.160-4.el7.x86_64                       1/33 
+  Installing : 2:vim-common-7.4.160-4.el7.x86_64                           2/33 
+  Installing : gpm-libs-1.20.7-5.el7.x86_64                                3/33 
+  Installing : groff-base-1.22.2-8.el7.x86_64                              4/33 
+  Installing : 1:perl-parent-0.225-244.el7.noarch                          5/33 
+  Installing : perl-HTTP-Tiny-0.033-3.el7.noarch                           6/33 
+  Installing : perl-podlators-2.5.1-3.el7.noarch                           7/33 
+  Installing : perl-Pod-Perldoc-3.20-4.el7.noarch                          8/33 
+  Installing : 1:perl-Pod-Escapes-1.04-292.el7.noarch                      9/33 
+  Installing : perl-Text-ParseWords-3.29-4.el7.noarch                     10/33 
+  Installing : perl-Encode-2.51-7.el7.x86_64                              11/33 
+  Installing : perl-Pod-Usage-1.63-3.el7.noarch                           12/33 
+  Installing : 4:perl-macros-5.16.3-292.el7.x86_64                        13/33 
+  Installing : 4:perl-libs-5.16.3-292.el7.x86_64                          14/33 
+  Installing : perl-Storable-2.45-3.el7.x86_64                            15/33 
+  Installing : perl-Exporter-5.68-3.el7.noarch                            16/33 
+  Installing : perl-constant-1.27-2.el7.noarch                            17/33 
+  Installing : perl-Time-Local-1.2300-2.el7.noarch                        18/33 
+  Installing : perl-Socket-2.010-4.el7.x86_64                             19/33 
+  Installing : perl-Carp-1.26-244.el7.noarch                              20/33 
+  Installing : 4:perl-Time-HiRes-1.9725-3.el7.x86_64                      21/33 
+  Installing : perl-PathTools-3.40-5.el7.x86_64                           22/33 
+  Installing : perl-Scalar-List-Utils-1.27-248.el7.x86_64                 23/33 
+  Installing : perl-File-Temp-0.23.01-3.el7.noarch                        24/33 
+  Installing : perl-File-Path-2.09-2.el7.noarch                           25/33 
+  Installing : perl-threads-shared-1.43-6.el7.x86_64                      26/33 
+  Installing : perl-threads-1.87-4.el7.x86_64                             27/33 
+  Installing : perl-Filter-1.49-3.el7.x86_64                              28/33 
+  Installing : 1:perl-Pod-Simple-3.28-4.el7.noarch                        29/33 
+  Installing : perl-Getopt-Long-2.40-3.el7.noarch                         30/33 
+  Installing : 4:perl-5.16.3-292.el7.x86_64                               31/33 
+  Installing : which-2.20-7.el7.x86_64                                    32/33 
+install-info: No such file or directory for /usr/share/info/which.info.gz
+  Installing : 2:vim-enhanced-7.4.160-4.el7.x86_64                        33/33 
+  Verifying  : perl-HTTP-Tiny-0.033-3.el7.noarch                           1/33 
+  Verifying  : perl-threads-shared-1.43-6.el7.x86_64                       2/33 
+  Verifying  : perl-Storable-2.45-3.el7.x86_64                             3/33 
+  Verifying  : perl-Exporter-5.68-3.el7.noarch                             4/33 
+  Verifying  : perl-constant-1.27-2.el7.noarch                             5/33 
+  Verifying  : perl-PathTools-3.40-5.el7.x86_64                            6/33 
+  Verifying  : 4:perl-macros-5.16.3-292.el7.x86_64                         7/33 
+  Verifying  : 1:perl-parent-0.225-244.el7.noarch                          8/33 
+  Verifying  : 4:perl-5.16.3-292.el7.x86_64                                9/33 
+  Verifying  : which-2.20-7.el7.x86_64                                    10/33 
+  Verifying  : groff-base-1.22.2-8.el7.x86_64                             11/33 
+  Verifying  : perl-File-Temp-0.23.01-3.el7.noarch                        12/33 
+  Verifying  : 1:perl-Pod-Simple-3.28-4.el7.noarch                        13/33 
+  Verifying  : perl-Time-Local-1.2300-2.el7.noarch                        14/33 
+  Verifying  : gpm-libs-1.20.7-5.el7.x86_64                               15/33 
+  Verifying  : 4:perl-libs-5.16.3-292.el7.x86_64                          16/33 
+  Verifying  : perl-Socket-2.010-4.el7.x86_64                             17/33 
+  Verifying  : perl-Carp-1.26-244.el7.noarch                              18/33 
+  Verifying  : 2:vim-enhanced-7.4.160-4.el7.x86_64                        19/33 
+  Verifying  : 4:perl-Time-HiRes-1.9725-3.el7.x86_64                      20/33 
+  Verifying  : perl-Scalar-List-Utils-1.27-248.el7.x86_64                 21/33 
+  Verifying  : 1:perl-Pod-Escapes-1.04-292.el7.noarch                     22/33 
+  Verifying  : 2:vim-filesystem-7.4.160-4.el7.x86_64                      23/33 
+  Verifying  : perl-Pod-Usage-1.63-3.el7.noarch                           24/33 
+  Verifying  : perl-Encode-2.51-7.el7.x86_64                              25/33 
+  Verifying  : perl-Pod-Perldoc-3.20-4.el7.noarch                         26/33 
+  Verifying  : perl-podlators-2.5.1-3.el7.noarch                          27/33 
+  Verifying  : perl-File-Path-2.09-2.el7.noarch                           28/33 
+  Verifying  : perl-threads-1.87-4.el7.x86_64                             29/33 
+  Verifying  : perl-Filter-1.49-3.el7.x86_64                              30/33 
+  Verifying  : perl-Getopt-Long-2.40-3.el7.noarch                         31/33 
+  Verifying  : perl-Text-ParseWords-3.29-4.el7.noarch                     32/33 
+  Verifying  : 2:vim-common-7.4.160-4.el7.x86_64                          33/33 
+
+Installed:
+  vim-enhanced.x86_64 2:7.4.160-4.el7                                           
+
+Dependency Installed:
+  gpm-libs.x86_64 0:1.20.7-5.el7                                                
+  groff-base.x86_64 0:1.22.2-8.el7                                              
+  perl.x86_64 4:5.16.3-292.el7                                                  
+  perl-Carp.noarch 0:1.26-244.el7                                               
+  perl-Encode.x86_64 0:2.51-7.el7                                               
+  perl-Exporter.noarch 0:5.68-3.el7                                             
+  perl-File-Path.noarch 0:2.09-2.el7                                            
+  perl-File-Temp.noarch 0:0.23.01-3.el7                                         
+  perl-Filter.x86_64 0:1.49-3.el7                                               
+  perl-Getopt-Long.noarch 0:2.40-3.el7                                          
+  perl-HTTP-Tiny.noarch 0:0.033-3.el7                                           
+  perl-PathTools.x86_64 0:3.40-5.el7                                            
+  perl-Pod-Escapes.noarch 1:1.04-292.el7                                        
+  perl-Pod-Perldoc.noarch 0:3.20-4.el7                                          
+  perl-Pod-Simple.noarch 1:3.28-4.el7                                           
+  perl-Pod-Usage.noarch 0:1.63-3.el7                                            
+  perl-Scalar-List-Utils.x86_64 0:1.27-248.el7                                  
+  perl-Socket.x86_64 0:2.010-4.el7                                              
+  perl-Storable.x86_64 0:2.45-3.el7                                             
+  perl-Text-ParseWords.noarch 0:3.29-4.el7                                      
+  perl-Time-HiRes.x86_64 4:1.9725-3.el7                                         
+  perl-Time-Local.noarch 0:1.2300-2.el7                                         
+  perl-constant.noarch 0:1.27-2.el7                                             
+  perl-libs.x86_64 4:5.16.3-292.el7                                             
+  perl-macros.x86_64 4:5.16.3-292.el7                                           
+  perl-parent.noarch 1:0.225-244.el7                                            
+  perl-podlators.noarch 0:2.5.1-3.el7                                           
+  perl-threads.x86_64 0:1.87-4.el7                                              
+  perl-threads-shared.x86_64 0:1.43-6.el7                                       
+  vim-common.x86_64 2:7.4.160-4.el7                                             
+  vim-filesystem.x86_64 2:7.4.160-4.el7                                         
+  which.x86_64 0:2.20-7.el7                                                     
+
+Complete!
+Loaded plugins: fastestmirror, ovl
+Cleaning repos: base epel extras updates
+Cleaning up everything
+Maybe you want: rm -rf /var/cache/yum, to also free up space taken by orphaned data from disabled or removed repos
+Cleaning up list of fastest mirrors
+Removing intermediate container 7dc0748db16b
+ ---> 8b98bd747b56
+Step 8/11 : RUN ssh-keygen -A  && ssh-keygen -t rsa -f /root/.ssh/id_rsa -q -P ""  && echo "PermitRootLogin yes" >> /etc/ssh/sshd_config
+ ---> Running in 3e9875c41191
+ssh-keygen: generating new host keys: RSA1 DSA ECDSA ED25519 
+Removing intermediate container 3e9875c41191
+ ---> 08ff30d8079d
+Step 9/11 : RUN su - User  && mkdir /home/User/.ssh/  && ssh-keygen -t rsa -f /home/User/.ssh/id_rsa -q -P ""  && chown -R User:User /home/User/.ssh/
+ ---> Running in b5f3a1b26620
+Removing intermediate container b5f3a1b26620
+ ---> e1d4f7940930
+Step 10/11 : EXPOSE 22
+ ---> Running in 920c34bbc7e1
+Removing intermediate container 920c34bbc7e1
+ ---> b09d657c0120
+Step 11/11 : RUN systemctl enable sshd
+ ---> Running in b426f71f19d9
+Removing intermediate container b426f71f19d9
+ ---> b1c7c1565939
+Successfully built b1c7c1565939
+Successfully tagged ssh-centos:latest
+VOTRE IMAGE DOCKER : ssh-centos est cree
+Pour l'utiliser : docker run --name <NOM> -d --privileged -ti -e container=docker ssh-centos /usr/sbin/init
+Sending build context to Docker daemon  2.048kB
+Step 1/4 : FROM ssh-centos
+ ---> b1c7c1565939
+Step 2/4 : ENV http_proxy=
+ ---> Running in accbc6fc4d7c
+Removing intermediate container accbc6fc4d7c
+ ---> 4dd31a9bb207
+Step 3/4 : ENV https_proxy=
+ ---> Running in 79c54d8d1811
+Removing intermediate container 79c54d8d1811
+ ---> 47f825e24015
+Step 4/4 : RUN yum -y update     && yum install -y epel-release ansible     && yum clean all
+ ---> Running in 364badf522a7
+Loaded plugins: fastestmirror, ovl
+Determining fastest mirrors
+ * base: distrib-coffee.ipsl.jussieu.fr
+ * epel: vesta.informatik.rwth-aachen.de
+ * extras: distrib-coffee.ipsl.jussieu.fr
+ * updates: distrib-coffee.ipsl.jussieu.fr
+No packages marked for update
+Loaded plugins: fastestmirror, ovl
+Loading mirror speeds from cached hostfile
+ * base: distrib-coffee.ipsl.jussieu.fr
+ * epel: vesta.informatik.rwth-aachen.de
+ * extras: distrib-coffee.ipsl.jussieu.fr
+ * updates: distrib-coffee.ipsl.jussieu.fr
+Package epel-release-7-11.noarch already installed and latest version
+Resolving Dependencies
+--> Running transaction check
+---> Package ansible.noarch 0:2.5.3-1.el7 will be installed
+--> Processing Dependency: sshpass for package: ansible-2.5.3-1.el7.noarch
+--> Processing Dependency: python2-jmespath for package: ansible-2.5.3-1.el7.noarch
+--> Processing Dependency: python-six for package: ansible-2.5.3-1.el7.noarch
+--> Processing Dependency: python-setuptools for package: ansible-2.5.3-1.el7.noarch
+--> Processing Dependency: python-paramiko for package: ansible-2.5.3-1.el7.noarch
+--> Processing Dependency: python-keyczar for package: ansible-2.5.3-1.el7.noarch
+--> Processing Dependency: python-jinja2 for package: ansible-2.5.3-1.el7.noarch
+--> Processing Dependency: python-httplib2 for package: ansible-2.5.3-1.el7.noarch
+--> Processing Dependency: python-crypto for package: ansible-2.5.3-1.el7.noarch
+--> Processing Dependency: PyYAML for package: ansible-2.5.3-1.el7.noarch
+--> Running transaction check
+---> Package PyYAML.x86_64 0:3.10-11.el7 will be installed
+--> Processing Dependency: libyaml-0.so.2()(64bit) for package: PyYAML-3.10-11.el7.x86_64
+---> Package python-httplib2.noarch 0:0.9.2-1.el7 will be installed
+---> Package python-jinja2.noarch 0:2.7.2-2.el7 will be installed
+--> Processing Dependency: python-babel >= 0.8 for package: python-jinja2-2.7.2-2.el7.noarch
+--> Processing Dependency: python-markupsafe for package: python-jinja2-2.7.2-2.el7.noarch
+---> Package python-keyczar.noarch 0:0.71c-2.el7 will be installed
+--> Processing Dependency: python-pyasn1 for package: python-keyczar-0.71c-2.el7.noarch
+---> Package python-paramiko.noarch 0:2.1.1-4.el7 will be installed
+--> Processing Dependency: python-cryptography for package: python-paramiko-2.1.1-4.el7.noarch
+---> Package python-setuptools.noarch 0:0.9.8-7.el7 will be installed
+--> Processing Dependency: python-backports-ssl_match_hostname for package: python-setuptools-0.9.8-7.el7.noarch
+---> Package python-six.noarch 0:1.9.0-2.el7 will be installed
+---> Package python2-crypto.x86_64 0:2.6.1-15.el7 will be installed
+--> Processing Dependency: libtomcrypt.so.0()(64bit) for package: python2-crypto-2.6.1-15.el7.x86_64
+---> Package python2-jmespath.noarch 0:0.9.0-3.el7 will be installed
+---> Package sshpass.x86_64 0:1.06-2.el7 will be installed
+--> Running transaction check
+---> Package libtomcrypt.x86_64 0:1.17-26.el7 will be installed
+--> Processing Dependency: libtommath >= 0.42.0 for package: libtomcrypt-1.17-26.el7.x86_64
+--> Processing Dependency: libtommath.so.0()(64bit) for package: libtomcrypt-1.17-26.el7.x86_64
+---> Package libyaml.x86_64 0:0.1.4-11.el7_0 will be installed
+---> Package python-babel.noarch 0:0.9.6-8.el7 will be installed
+---> Package python-backports-ssl_match_hostname.noarch 0:3.5.0.1-1.el7 will be installed
+--> Processing Dependency: python-ipaddress for package: python-backports-ssl_match_hostname-3.5.0.1-1.el7.noarch
+--> Processing Dependency: python-backports for package: python-backports-ssl_match_hostname-3.5.0.1-1.el7.noarch
+---> Package python-markupsafe.x86_64 0:0.11-10.el7 will be installed
+---> Package python2-cryptography.x86_64 0:1.7.2-2.el7 will be installed
+--> Processing Dependency: python-idna >= 2.0 for package: python2-cryptography-1.7.2-2.el7.x86_64
+--> Processing Dependency: python-cffi >= 1.4.1 for package: python2-cryptography-1.7.2-2.el7.x86_64
+--> Processing Dependency: python-enum34 for package: python2-cryptography-1.7.2-2.el7.x86_64
+--> Processing Dependency: openssl for package: python2-cryptography-1.7.2-2.el7.x86_64
+---> Package python2-pyasn1.noarch 0:0.1.9-7.el7 will be installed
+--> Running transaction check
+---> Package libtommath.x86_64 0:0.42.0-6.el7 will be installed
+---> Package openssl.x86_64 1:1.0.2k-12.el7 will be installed
+--> Processing Dependency: make for package: 1:openssl-1.0.2k-12.el7.x86_64
+---> Package python-backports.x86_64 0:1.0-8.el7 will be installed
+---> Package python-cffi.x86_64 0:1.6.0-5.el7 will be installed
+--> Processing Dependency: python-pycparser for package: python-cffi-1.6.0-5.el7.x86_64
+---> Package python-enum34.noarch 0:1.0.4-1.el7 will be installed
+---> Package python-idna.noarch 0:2.4-1.el7 will be installed
+---> Package python-ipaddress.noarch 0:1.0.16-2.el7 will be installed
+--> Running transaction check
+---> Package make.x86_64 1:3.82-23.el7 will be installed
+---> Package python-pycparser.noarch 0:2.14-1.el7 will be installed
+--> Processing Dependency: python-ply for package: python-pycparser-2.14-1.el7.noarch
+--> Running transaction check
+---> Package python-ply.noarch 0:3.4-11.el7 will be installed
+--> Finished Dependency Resolution
+
+Dependencies Resolved
+
+================================================================================
+ Package                              Arch    Version             Repository
+                                                                           Size
+================================================================================
+Installing:
+ ansible                              noarch  2.5.3-1.el7         epel    9.0 M
+Installing for dependencies:
+ PyYAML                               x86_64  3.10-11.el7         base    153 k
+ libtomcrypt                          x86_64  1.17-26.el7         extras  224 k
+ libtommath                           x86_64  0.42.0-6.el7        extras   36 k
+ libyaml                              x86_64  0.1.4-11.el7_0      base     55 k
+ make                                 x86_64  1:3.82-23.el7       base    420 k
+ openssl                              x86_64  1:1.0.2k-12.el7     base    492 k
+ python-babel                         noarch  0.9.6-8.el7         base    1.4 M
+ python-backports                     x86_64  1.0-8.el7           base    5.8 k
+ python-backports-ssl_match_hostname  noarch  3.5.0.1-1.el7       base     13 k
+ python-cffi                          x86_64  1.6.0-5.el7         base    218 k
+ python-enum34                        noarch  1.0.4-1.el7         base     52 k
+ python-httplib2                      noarch  0.9.2-1.el7         extras  115 k
+ python-idna                          noarch  2.4-1.el7           base     94 k
+ python-ipaddress                     noarch  1.0.16-2.el7        base     34 k
+ python-jinja2                        noarch  2.7.2-2.el7         base    515 k
+ python-keyczar                       noarch  0.71c-2.el7         epel    218 k
+ python-markupsafe                    x86_64  0.11-10.el7         base     25 k
+ python-paramiko                      noarch  2.1.1-4.el7         extras  268 k
+ python-ply                           noarch  3.4-11.el7          base    123 k
+ python-pycparser                     noarch  2.14-1.el7          base    104 k
+ python-setuptools                    noarch  0.9.8-7.el7         base    397 k
+ python-six                           noarch  1.9.0-2.el7         base     29 k
+ python2-crypto                       x86_64  2.6.1-15.el7        extras  477 k
+ python2-cryptography                 x86_64  1.7.2-2.el7         base    502 k
+ python2-jmespath                     noarch  0.9.0-3.el7         extras   39 k
+ python2-pyasn1                       noarch  0.1.9-7.el7         base    100 k
+ sshpass                              x86_64  1.06-2.el7          extras   21 k
+
+Transaction Summary
+================================================================================
+Install  1 Package (+27 Dependent packages)
+
+Total download size: 15 M
+Installed size: 70 M
+Downloading packages:
+[91mwarning: /var/cache/yum/x86_64/7/epel/packages/ansible-2.5.3-1.el7.noarch.rpm: Header V3 RSA/SHA256 Signature, key ID 352c64e5: NOKEY
+[0mPublic key for ansible-2.5.3-1.el7.noarch.rpm is not installed
+[91mhttp://centos.crazyfrogs.org/7.5.1804/os/x86_64/Packages/python-cffi-1.6.0-5.el7.x86_64.rpm: [Errno 12] Timeout on http://centos.crazyfrogs.org/7.5.1804/os/x86_64/Packages/python-cffi-1.6.0-5.el7.x86_64.rpm: (28, 'Operation too slow. Less than 1000 bytes/sec transferred the last 30 seconds')
+[0m[91mTrying other mirror.
+[0m--------------------------------------------------------------------------------
+Total                                              169 kB/s |  15 MB  01:30     
+Retrieving key from file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7
+[91mImporting GPG key 0x352C64E5:
+ Userid     : "Fedora EPEL (7) <epel@fedoraproject.org>"
+ Fingerprint: 91e9 7d7c 4a5e 96f1 7f3e 888f 6a2f aea2 352c 64e5
+ Package    : epel-release-7-11.noarch (@extras)
+ From       : /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7
+[0mRunning transaction check
+Running transaction test
+Transaction test succeeded
+Running transaction
+  Installing : python2-pyasn1-0.1.9-7.el7.noarch                           1/28 
+  Installing : python-ipaddress-1.0.16-2.el7.noarch                        2/28 
+  Installing : python-six-1.9.0-2.el7.noarch                               3/28 
+  Installing : python-httplib2-0.9.2-1.el7.noarch                          4/28 
+  Installing : python-enum34-1.0.4-1.el7.noarch                            5/28 
+  Installing : libyaml-0.1.4-11.el7_0.x86_64                               6/28 
+  Installing : PyYAML-3.10-11.el7.x86_64                                   7/28 
+  Installing : 1:make-3.82-23.el7.x86_64                                   8/28 
+  Installing : 1:openssl-1.0.2k-12.el7.x86_64                              9/28 
+  Installing : libtommath-0.42.0-6.el7.x86_64                             10/28 
+  Installing : libtomcrypt-1.17-26.el7.x86_64                             11/28 
+  Installing : python2-crypto-2.6.1-15.el7.x86_64                         12/28 
+  Installing : python-keyczar-0.71c-2.el7.noarch                          13/28 
+  Installing : python-backports-1.0-8.el7.x86_64                          14/28 
+  Installing : python-backports-ssl_match_hostname-3.5.0.1-1.el7.noarch   15/28 
+  Installing : python-setuptools-0.9.8-7.el7.noarch                       16/28 
+  Installing : python-babel-0.9.6-8.el7.noarch                            17/28 
+  Installing : python-ply-3.4-11.el7.noarch                               18/28 
+  Installing : python-pycparser-2.14-1.el7.noarch                         19/28 
+  Installing : python-cffi-1.6.0-5.el7.x86_64                             20/28 
+  Installing : python-markupsafe-0.11-10.el7.x86_64                       21/28 
+  Installing : python-jinja2-2.7.2-2.el7.noarch                           22/28 
+  Installing : python-idna-2.4-1.el7.noarch                               23/28 
+  Installing : python2-cryptography-1.7.2-2.el7.x86_64                    24/28 
+  Installing : python-paramiko-2.1.1-4.el7.noarch                         25/28 
+  Installing : sshpass-1.06-2.el7.x86_64                                  26/28 
+  Installing : python2-jmespath-0.9.0-3.el7.noarch                        27/28 
+  Installing : ansible-2.5.3-1.el7.noarch                                 28/28 
+  Verifying  : python-keyczar-0.71c-2.el7.noarch                           1/28 
+  Verifying  : python-jinja2-2.7.2-2.el7.noarch                            2/28 
+  Verifying  : python-backports-ssl_match_hostname-3.5.0.1-1.el7.noarch    3/28 
+  Verifying  : python2-jmespath-0.9.0-3.el7.noarch                         4/28 
+  Verifying  : sshpass-1.06-2.el7.x86_64                                   5/28 
+  Verifying  : python2-cryptography-1.7.2-2.el7.x86_64                     6/28 
+  Verifying  : python-setuptools-0.9.8-7.el7.noarch                        7/28 
+  Verifying  : ansible-2.5.3-1.el7.noarch                                  8/28 
+  Verifying  : python-six-1.9.0-2.el7.noarch                               9/28 
+  Verifying  : python-idna-2.4-1.el7.noarch                               10/28 
+  Verifying  : python-markupsafe-0.11-10.el7.x86_64                       11/28 
+  Verifying  : python-ply-3.4-11.el7.noarch                               12/28 
+  Verifying  : python-babel-0.9.6-8.el7.noarch                            13/28 
+  Verifying  : python-paramiko-2.1.1-4.el7.noarch                         14/28 
+  Verifying  : python-backports-1.0-8.el7.x86_64                          15/28 
+  Verifying  : python-cffi-1.6.0-5.el7.x86_64                             16/28 
+  Verifying  : libtommath-0.42.0-6.el7.x86_64                             17/28 
+  Verifying  : 1:make-3.82-23.el7.x86_64                                  18/28 
+  Verifying  : python-pycparser-2.14-1.el7.noarch                         19/28 
+  Verifying  : libyaml-0.1.4-11.el7_0.x86_64                              20/28 
+  Verifying  : python2-crypto-2.6.1-15.el7.x86_64                         21/28 
+  Verifying  : python-ipaddress-1.0.16-2.el7.noarch                       22/28 
+  Verifying  : python-enum34-1.0.4-1.el7.noarch                           23/28 
+  Verifying  : python-httplib2-0.9.2-1.el7.noarch                         24/28 
+  Verifying  : python2-pyasn1-0.1.9-7.el7.noarch                          25/28 
+  Verifying  : PyYAML-3.10-11.el7.x86_64                                  26/28 
+  Verifying  : 1:openssl-1.0.2k-12.el7.x86_64                             27/28 
+  Verifying  : libtomcrypt-1.17-26.el7.x86_64                             28/28 
+
+Installed:
+  ansible.noarch 0:2.5.3-1.el7                                                  
+
+Dependency Installed:
+  PyYAML.x86_64 0:3.10-11.el7                                                   
+  libtomcrypt.x86_64 0:1.17-26.el7                                              
+  libtommath.x86_64 0:0.42.0-6.el7                                              
+  libyaml.x86_64 0:0.1.4-11.el7_0                                               
+  make.x86_64 1:3.82-23.el7                                                     
+  openssl.x86_64 1:1.0.2k-12.el7                                                
+  python-babel.noarch 0:0.9.6-8.el7                                             
+  python-backports.x86_64 0:1.0-8.el7                                           
+  python-backports-ssl_match_hostname.noarch 0:3.5.0.1-1.el7                    
+  python-cffi.x86_64 0:1.6.0-5.el7                                              
+  python-enum34.noarch 0:1.0.4-1.el7                                            
+  python-httplib2.noarch 0:0.9.2-1.el7                                          
+  python-idna.noarch 0:2.4-1.el7                                                
+  python-ipaddress.noarch 0:1.0.16-2.el7                                        
+  python-jinja2.noarch 0:2.7.2-2.el7                                            
+  python-keyczar.noarch 0:0.71c-2.el7                                           
+  python-markupsafe.x86_64 0:0.11-10.el7                                        
+  python-paramiko.noarch 0:2.1.1-4.el7                                          
+  python-ply.noarch 0:3.4-11.el7                                                
+  python-pycparser.noarch 0:2.14-1.el7                                          
+  python-setuptools.noarch 0:0.9.8-7.el7                                        
+  python-six.noarch 0:1.9.0-2.el7                                               
+  python2-crypto.x86_64 0:2.6.1-15.el7                                          
+  python2-cryptography.x86_64 0:1.7.2-2.el7                                     
+  python2-jmespath.noarch 0:0.9.0-3.el7                                         
+  python2-pyasn1.noarch 0:0.1.9-7.el7                                           
+  sshpass.x86_64 0:1.06-2.el7                                                   
+
+Complete!
+Loaded plugins: fastestmirror, ovl
+Cleaning repos: base epel extras updates
+Cleaning up everything
+Maybe you want: rm -rf /var/cache/yum, to also free up space taken by orphaned data from disabled or removed repos
+Cleaning up list of fastest mirrors
+Removing intermediate container 364badf522a7
+ ---> d1eb28b11f90
+Successfully built d1eb28b11f90
+Successfully tagged ansible-centos:latest
+VOTRE IMAGE DOCKER : ansible-centos est cree
+Pour l'utiliser : docker run --name <NOM> -d --privileged -ti -e container=docker ansible-centos /usr/sbin/init
+Creating network "ansible_default" with the default driver
+Creating vm3 ... 
+Creating vm2 ... 
+Creating vm4 ... 
+Creating vm1 ... 
+[3A[2KCreating vm2 ... [32mdone[0m[3B[4A[2KCreating vm3 ... [32mdone[0m[4B[1A[2KCreating vm1 ... [32mdone[0m[1B[2A[2KCreating vm4 ... [32mdone[0m[2BCreating mamachine ... 
+[1A[2KCreating mamachine ... [32mdone[0m[1B
+
+#### How To Use ####
+
+Maintenant utiliser votre user et votre password pour vous déplacer entre mamachine et les VMs:
+
+docker exec -it mamachine /bin/bash
+
